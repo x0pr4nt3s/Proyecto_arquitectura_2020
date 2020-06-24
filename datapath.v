@@ -4,6 +4,7 @@
 `include "mips_parts/adder.v"
 `include "mips_parts/signext.v"
 `include "mips_parts/mux2.v"
+`include "mips_parts/Alu.v"
 
 module datapath(clk,reset,memtoreg,pcsrc,
                 alusrc,regdst,regwrite,jump,
@@ -34,13 +35,24 @@ mux2 pcbrmux(pcplus4,pcbranch,pcsrc,pcnextbr);
 mux2 pcmux(pcnextbr,{pcplus4[31:28],instr[25:0],2'b00},jump,
             pcnext);
 
-//register file logic 
+// register file logic 
 
-mux2 #(5) wrmux(instr[20:16],instr[15:11],regdst);//mux del write register para el RF 
+regfile rf(clk,regwrite,instr[25:21],instr[20:16],writereg,
+            result,srca,writedata);
 
-//mux2 #(32) 
+mux2 #(5) wrmux(instr[20:16],instr[15:11],regdst,writereg);//mux del write register para el RF 
 
+mux2 #(32) resmux(pcnextbr,{pcplus4[31:28],instr[25:0],2'b00},
+                jump,pcnext);
 
+signext se(instr[15:0],signim);
+
+// ALU Logic 
+
+mux2 #(32) srcbmux(writedata,signim,alusrc,srcb);
+
+alu Alu(srca,srcb,alucontrol,
+    aluout,zero);
 
 
 endmodule
