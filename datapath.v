@@ -1,3 +1,6 @@
+`ifndef _datapath_v_
+`define _datapath_v_ 
+
 `include "mips_parts/flopr.v"
 `include "mips_parts/Register_file.v"
 `include "mips_parts/sl2.v"
@@ -23,7 +26,6 @@ wire [31:0] pcnext,pcnextbr,pcplus4,pcbranch;
 wire [31:0] signim,signimmsh;
 wire [31:0] srca,srcb;
 wire [31:0] result;
-
 
 //next pc
 
@@ -51,8 +53,8 @@ signext se(instr[15:0],signim);
 
 mux2 #(32) srcbmux(writedata,signim,alusrc,srcb);
 
-alu Alu(srca,srcb,alucontrol,
-    aluout,zero);
+alu Alu(srca,srcb,alucontrol,aluout,zero);
 
 
 endmodule
+`endif

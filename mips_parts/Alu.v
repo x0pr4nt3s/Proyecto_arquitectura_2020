@@ -1,3 +1,6 @@
+`ifndef _Alu_v_
+`define _Alu_v_ 
+
 module alu(a,b,aluop,result,zero);
 input [31:0] a,b;
 input [2:0] aluop;
@@ -35,8 +38,9 @@ begin
         3'b100: //BEQ 
         begin
            result <= a + b; 
-           zero <= 1'b1;
+           zero <= (a < b) ? 1'b1:1'b0;
         end 
     endcase
 end 
 endmodule
+`endif
