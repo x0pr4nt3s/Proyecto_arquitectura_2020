@@ -1,3 +1,5 @@
+`ifndef _mips_v_
+`define _mips_v_
 `include "datapath.v"
 `include "controller.v"
 module mips(clk,reset,pc,instr,memwrite,aluout,writedata,
@@ -27,3 +29,5 @@ wire [2:0]  alucontrol;
 
 
 endmodule 
+
+`endif
