@@ -1,13 +1,13 @@
 `ifndef _datapath_v_
 `define _datapath_v_ 
 
-`include "mips_parts/flopr.v"
-`include "mips_parts/Register_file.v"
-`include "mips_parts/sl2.v"
-`include "mips_parts/adder.v"
-`include "mips_parts/signext.v"
-`include "mips_parts/mux2.v"
-`include "mips_parts/Alu.v"
+`include "flopr.v"
+`include "Register_file.v"
+`include "sl2.v"
+`include "adder.v"
+`include "signext.v"
+`include "mux2.v"
+`include "Alu.v"
 
 module datapath(clk,reset,memtoreg,pcsrc,
                 alusrc,regdst,regwrite,jump,
@@ -44,9 +44,7 @@ regfile rf(clk,regwrite,instr[25:21],instr[20:16],writereg,
 
 mux2 #(5) wrmux(instr[20:16],instr[15:11],regdst,writereg);//mux del write register para el RF 
 
-mux2 #(32) resmux(pcnextbr,{pcplus4[31:28],instr[25:0],2'b00},
-                jump,pcnext);
-
+mux2 #(32)  resmux(aluout, readdata,memtoreg, result);
 signext se(instr[15:0],signim);
 
 // ALU Logic 

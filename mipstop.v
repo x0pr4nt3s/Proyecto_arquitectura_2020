@@ -1,5 +1,5 @@
-`include "mems/dmem.v"
-`include "mems/imem.v"
+`include "dmem.v"
+`include "imem.v"
 `include "mips.v"
 module top(clk,reset,writedata,dataadr,memwrite);
 
@@ -10,7 +10,8 @@ wire [31:0] pc, instr, readdata;
   
   // instantiate processor and memories
 mips mips(clk, reset, pc, instr, memwrite, dataadr, writedata, readdata);
-imem imem(pc[7:2], instr);
+imem imem(pc, instr);
 dmem dmem(clk, memwrite, dataadr, writedata, readdata);
+
 
 endmodule

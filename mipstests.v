@@ -13,7 +13,11 @@ module testbench();
   // initialize test
   initial
     begin
+      $dumpfile("mips.vcd");
+      $dumpvars(0,testbench);
       reset <= 1; # 22; reset <= 0;
+      #300;
+      $finish;
     end
 
   // generate clock to sequence tests
@@ -28,10 +32,10 @@ module testbench();
       if(memwrite) begin
         if(dataadr === 84 & writedata === 7) begin
           $display("Simulation succeeded");
-          $stop;
+          $finish;
         end else if (dataadr !== 80) begin
           $display("Simulation failed");
-          $stop;
+          $finish;
         end
       end
     end
