@@ -15,7 +15,7 @@ module testbench();
     begin
       $dumpfile("mips.vcd");
       $dumpvars(0,testbench);
-      reset <= 1; # 22; reset <= 0;
+      reset <= 1; #1; reset <= 0;
       #300;
       $finish;
     end
@@ -23,7 +23,7 @@ module testbench();
   // generate clock to sequence tests
   always
     begin
-      clk <= 1; # 5; clk <= 0; # 5;
+      clk <= 1; # 1; clk <= 0; # 1;
     end
 
   // check that 7 gets written to address 84

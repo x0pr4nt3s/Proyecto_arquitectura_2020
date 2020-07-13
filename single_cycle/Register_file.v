@@ -13,9 +13,9 @@ module regfile(clk,we3,ra1,ra2,wa3,wd3,rd1,rd2);
   // read two ports combinationally
   // write third port on rising edge of clock
   // register 0 hardwired to 0
-//  initial begin
-  //  $readmemh("variables.txt",variables);
-  //end
+  initial begin
+  $readmemb("variables.txt",variables);
+  end
 
   always@(posedge clk)
   begin

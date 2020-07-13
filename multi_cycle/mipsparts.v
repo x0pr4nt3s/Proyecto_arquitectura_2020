@@ -7,7 +7,6 @@ module regfile(input        clk,
   reg [31:0] rf[31:0];
 
 
-
   always @(posedge clk)
     if (we3) rf[wa3] <= wd3;	
 
