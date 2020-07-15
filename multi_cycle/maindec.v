@@ -80,16 +80,16 @@ always @(*)
     FETCH:   controls <= 15'b101000000010000;
     DECODE:  controls <= 15'b000000000110000;
     // your code goes here 
-    MEMADR:  controls <= 15'h0420;      
-    MEMRD:   controls <= 15'h0100;
-    MEMWB:   controls <= 15'h0880;
-    MEMWR:   controls <= 15'h2100;
-    RTYPEEX: controls <= 15'h0402;
-    RTYPEWB: controls <= 15'h0840;
-    BEQEX:   controls <= 15'h0605;
-    ADDIEX:  controls <= 15'h0420;
-    ADDIWB:  controls <= 15'h0800;
-    JEX:     controls <= 15'h4008;	 
-    default: controls <= 15'hxxxx;// should never happen
+    MEMADR:  controls <= 15'b000010000100000;      
+    MEMRD:   controls <= 15'b000000100000000;
+    MEMWB:   controls <= 15'b000100010000000;
+    MEMWR:   controls <= 15'b010000100000000;
+    RTYPEEX: controls <= 15'b000010000000010;
+    RTYPEWB: controls <= 15'b000100001000000;
+    BEQEX:   controls <= 15'b000011000000101;
+    ADDIEX:  controls <= 15'b000010000100000;
+    ADDIWB:  controls <= 15'b000100000000000;
+    JEX:     controls <= 15'b100000000001000;	 
+    default: controls <= 15'bxxxxxxxxxxxxxxx;// should never happen
   endcase
 endmodule
