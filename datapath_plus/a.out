@@ -1,0 +1,96 @@
+#! /usr/bin/vvp
+:ivl_version "10.1 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "system";
+:vpi_module "vhdl_sys";
+:vpi_module "v2005_math";
+:vpi_module "va_math";
+S_0x7fffe798e870 .scope module, "testbench" "testbench" 2 2;
+ .timescale 0 0;
+v0x7fffe79b29d0_0 .var "a", 31 0;
+v0x7fffe79b2a90_0 .net "alu_float_result", 31 0, L_0x7fffe79b4870;  1 drivers
+v0x7fffe79b2b30_0 .var "b", 31 0;
+S_0x7fffe798ff60 .scope module, "prueba" "floating_alu_add" 2 7, 3 1 0, S_0x7fffe798e870;
+ .timescale 0 0;
+    .port_info 0 /INPUT 32 "a"
+    .port_info 1 /INPUT 32 "b"
+    .port_info 2 /OUTPUT 32 "alu_float_result"
+L_0x7fffe79b37e0 .functor AND 1, L_0x7fffe79b2bd0, L_0x7fffe79b2c70, C4<1>, C4<1>;
+v0x7fffe798a050_0 .net *"_s11", 22 0, L_0x7fffe79b2f30;  1 drivers
+L_0x7fb7cc5d0060 .functor BUFT 1, C4<1>, C4<0>, C4<0>, C4<0>;
+v0x7fffe79b0fe0_0 .net/2u *"_s14", 0 0, L_0x7fb7cc5d0060;  1 drivers
+v0x7fffe79b10c0_0 .net *"_s17", 22 0, L_0x7fffe79b3160;  1 drivers
+v0x7fffe79b1180_0 .net *"_s20", 0 0, L_0x7fffe79b3340;  1 drivers
+v0x7fffe79b1240_0 .net *"_s22", 7 0, L_0x7fffe79b3480;  1 drivers
+v0x7fffe79b1370_0 .net *"_s24", 7 0, L_0x7fffe79b3580;  1 drivers
+v0x7fffe79b1450_0 .net *"_s28", 0 0, L_0x7fffe79b3850;  1 drivers
+v0x7fffe79b1510_0 .net *"_s32", 0 0, L_0x7fffe79b3a60;  1 drivers
+v0x7fffe79b15d0_0 .net *"_s36", 0 0, L_0x7fffe79b3cd0;  1 drivers
+v0x7fffe79b1690_0 .net *"_s38", 23 0, L_0x7fffe79b3d70;  1 drivers
+v0x7fffe79b1770_0 .net *"_s40", 23 0, L_0x7fffe79b3f50;  1 drivers
+v0x7fffe79b1850_0 .net *"_s44", 0 0, L_0x7fffe79b3eb0;  1 drivers
+v0x7fffe79b1910_0 .net *"_s49", 22 0, L_0x7fffe79b43e0;  1 drivers
+v0x7fffe79b19f0_0 .net *"_s51", 22 0, L_0x7fffe79b44d0;  1 drivers
+L_0x7fb7cc5d0018 .functor BUFT 1, C4<1>, C4<0>, C4<0>, C4<0>;
+v0x7fffe79b1ad0_0 .net/2u *"_s8", 0 0, L_0x7fb7cc5d0018;  1 drivers
+v0x7fffe79b1bb0_0 .net "a", 31 0, v0x7fffe79b29d0_0;  1 drivers
+v0x7fffe79b1c90_0 .net "alu_float_result", 31 0, L_0x7fffe79b4870;  alias, 1 drivers
+v0x7fffe79b1d70_0 .net "b", 31 0, v0x7fffe79b2b30_0;  1 drivers
+v0x7fffe79b1e50_0 .net "diff_exponents", 7 0, L_0x7fffe79b3740;  1 drivers
+v0x7fffe79b1f30_0 .net "exponente_sesgado_a", 7 0, L_0x7fffe79b2d60;  1 drivers
+v0x7fffe79b2010_0 .net "exponente_sesgado_b", 7 0, L_0x7fffe79b2e00;  1 drivers
+v0x7fffe79b20f0_0 .net "mantisa_final", 22 0, L_0x7fffe79b4690;  1 drivers
+v0x7fffe79b21d0_0 .net "mantisa_mayor", 23 0, L_0x7fffe79b4280;  1 drivers
+v0x7fffe79b22b0_0 .net "mantisa_norm_a", 23 0, L_0x7fffe79b3000;  1 drivers
+v0x7fffe79b2390_0 .net "mantisa_norm_b", 23 0, L_0x7fffe79b3200;  1 drivers
+v0x7fffe79b2470_0 .net "mayor_exponente", 7 0, L_0x7fffe79b3b50;  1 drivers
+v0x7fffe79b2550_0 .net "menor_exponente", 7 0, L_0x7fffe79b38f0;  1 drivers
+v0x7fffe79b2630_0 .net "new_mantisa_shift", 23 0, L_0x7fffe79b4040;  1 drivers
+v0x7fffe79b2710_0 .net "sign_a", 0 0, L_0x7fffe79b2bd0;  1 drivers
+v0x7fffe79b27d0_0 .net "sign_b", 0 0, L_0x7fffe79b2c70;  1 drivers
+v0x7fffe79b2890_0 .net "sign_final", 0 0, L_0x7fffe79b37e0;  1 drivers
+L_0x7fffe79b2bd0 .part v0x7fffe79b29d0_0, 31, 1;
+L_0x7fffe79b2c70 .part v0x7fffe79b2b30_0, 31, 1;
+L_0x7fffe79b2d60 .part v0x7fffe79b29d0_0, 23, 8;
+L_0x7fffe79b2e00 .part v0x7fffe79b2b30_0, 23, 8;
+L_0x7fffe79b2f30 .part v0x7fffe79b29d0_0, 0, 23;
+L_0x7fffe79b3000 .concat [ 23 1 0 0], L_0x7fffe79b2f30, L_0x7fb7cc5d0018;
+L_0x7fffe79b3160 .part v0x7fffe79b2b30_0, 0, 23;
+L_0x7fffe79b3200 .concat [ 23 1 0 0], L_0x7fffe79b3160, L_0x7fb7cc5d0060;
+L_0x7fffe79b3340 .cmp/ge 8, L_0x7fffe79b2d60, L_0x7fffe79b2e00;
+L_0x7fffe79b3480 .arith/sub 8, L_0x7fffe79b2d60, L_0x7fffe79b2e00;
+L_0x7fffe79b3580 .arith/sub 8, L_0x7fffe79b2e00, L_0x7fffe79b2d60;
+L_0x7fffe79b3740 .functor MUXZ 8, L_0x7fffe79b3580, L_0x7fffe79b3480, L_0x7fffe79b3340, C4<>;
+L_0x7fffe79b3850 .cmp/ge 8, L_0x7fffe79b2d60, L_0x7fffe79b2e00;
+L_0x7fffe79b38f0 .functor MUXZ 8, L_0x7fffe79b2d60, L_0x7fffe79b2e00, L_0x7fffe79b3850, C4<>;
+L_0x7fffe79b3a60 .cmp/eq 8, L_0x7fffe79b38f0, L_0x7fffe79b2d60;
+L_0x7fffe79b3b50 .functor MUXZ 8, L_0x7fffe79b2d60, L_0x7fffe79b2e00, L_0x7fffe79b3a60, C4<>;
+L_0x7fffe79b3cd0 .cmp/eq 8, L_0x7fffe79b38f0, L_0x7fffe79b2d60;
+L_0x7fffe79b3d70 .shift/r 24, L_0x7fffe79b3000, L_0x7fffe79b3740;
+L_0x7fffe79b3f50 .shift/r 24, L_0x7fffe79b3200, L_0x7fffe79b3740;
+L_0x7fffe79b4040 .functor MUXZ 24, L_0x7fffe79b3f50, L_0x7fffe79b3d70, L_0x7fffe79b3cd0, C4<>;
+L_0x7fffe79b3eb0 .cmp/eq 8, L_0x7fffe79b38f0, L_0x7fffe79b2d60;
+L_0x7fffe79b4280 .functor MUXZ 24, L_0x7fffe79b3000, L_0x7fffe79b3200, L_0x7fffe79b3eb0, C4<>;
+L_0x7fffe79b43e0 .part L_0x7fffe79b4040, 0, 23;
+L_0x7fffe79b44d0 .part L_0x7fffe79b4280, 0, 23;
+L_0x7fffe79b4690 .arith/sum 23, L_0x7fffe79b43e0, L_0x7fffe79b44d0;
+L_0x7fffe79b4870 .concat [ 23 8 1 0], L_0x7fffe79b4690, L_0x7fffe79b3b50, L_0x7fffe79b37e0;
+    .scope S_0x7fffe798e870;
+T_0 ;
+    %vpi_call 2 11 "$dumpfile", "prueba_float.vcd" {0 0 0};
+    %vpi_call 2 12 "$dumpvars", 32'sb00000000000000000000000000000000, S_0x7fffe798e870 {0 0 0};
+    %pushi/vec4 1108279296, 0, 32;
+    %assign/vec4 v0x7fffe79b29d0_0, 0;
+    %pushi/vec4 1101266944, 0, 32;
+    %assign/vec4 v0x7fffe79b2b30_0, 0;
+    %delay 1, 0;
+    %vpi_call 2 15 "$finish" {0 0 0};
+    %end;
+    .thread T_0;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "float_add_tb.v";
+    "./float_add.v";

@@ -1,0 +1,56 @@
+$date
+	Tue Jul 21 07:22:49 2020
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module testbench $end
+$var wire 32 ! alu_float_result [31:0] $end
+$var reg 32 " a [31:0] $end
+$var reg 32 # b [31:0] $end
+$scope module prueba $end
+$var wire 32 $ a [31:0] $end
+$var wire 32 % b [31:0] $end
+$var wire 1 & sign_final $end
+$var wire 1 ' sign_b $end
+$var wire 1 ( sign_a $end
+$var wire 24 ) new_mantisa_shift [23:0] $end
+$var wire 8 * menor_exponente [7:0] $end
+$var wire 8 + mayor_exponente [7:0] $end
+$var wire 24 , mantisa_norm_b [23:0] $end
+$var wire 24 - mantisa_norm_a [23:0] $end
+$var wire 24 . mantisa_mayor [23:0] $end
+$var wire 23 / mantisa_final [22:0] $end
+$var wire 8 0 exponente_sesgado_b [7:0] $end
+$var wire 8 1 exponente_sesgado_a [7:0] $end
+$var wire 8 2 diff_exponents [7:0] $end
+$var wire 32 3 alu_float_result [31:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+b1000010011000010000000000000000 3
+b1 2
+b10000100 1
+b10000011 0
+b11000010000000000000000 /
+b100011110000000000000000 .
+b100011110000000000000000 -
+b101001000000000000000000 ,
+b10000100 +
+b10000011 *
+b10100100000000000000000 )
+0(
+0'
+0&
+b1000001101001000000000000000000 %
+b1000010000011110000000000000000 $
+b1000001101001000000000000000000 #
+b1000010000011110000000000000000 "
+b1000010011000010000000000000000 !
+$end
+#1
