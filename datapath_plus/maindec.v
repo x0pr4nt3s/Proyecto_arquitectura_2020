@@ -1,6 +1,6 @@
 module maindec(input clk, reset, 
 input [5:0] op, 
-output pcwrite,memwrite,irwrite,regwrite,
+output pcwrite,memwrite,irwrite,regwrite_int,regwrite_float,
 output alusrca,branch,iord,memtoreg,regdst,
 output [1:0] alusrcb,pcsrc,
 output [2:0] aluop);
@@ -44,7 +44,7 @@ parameter FLOAT = 6'b010001;//Opcode for FLOAT
 
 
 reg [4:0]  state, nextstate;
-reg [15:0] controls;
+reg [16:0] controls;
 
   // state register
 always @(posedge clk or posedge reset)			
@@ -70,7 +70,7 @@ always @(*)
     ANDI:    nextstate <= ANDI_EX;
     SLTI:    nextstate <= SLTI_EX;
     J:       nextstate <= JEX;
-    FLOAT:   nextstate <= FLOAT_ADD;
+    FLOAT:   nextstate <= FLOAT_ADD_EX;
     default: nextstate <= 4'bx; // should never happen
     endcase
  		// Add code here
@@ -104,12 +104,15 @@ always @(*)
     SLTI_EX: nextstate <= SLTI_WB;
     SLTI_WB: nextstate <= FETCH;
 
+    FLOAT_ADD_EX : nextstate <= FLOAT_ADD_WB;
+    FLOAT_ADD_WB : nextstate <= FETCH;
+
 
     default: nextstate <= 5'bx; // should never happen
   endcase
 
   // output logic
-  assign {pcwrite, memwrite, irwrite, regwrite, 
+  assign {pcwrite, memwrite, irwrite, regwrite_int,regwrite_float, 
   alusrca, branch, iord, memtoreg, regdst,
   alusrcb, pcsrc, aluop} = controls;
 
@@ -120,33 +123,37 @@ always @(*)
   // output logic for the first two states, S0 and S1, for you.
 always @(*)
   case(state)
-    FETCH:   controls <= 16'b1010000000100000;
-    DECODE:  controls <= 16'b0000000001100000;
+    FETCH:   controls <= 17'b10100000000100000;
+    DECODE:  controls <= 17'b00000000001100000;
     // your code goes here 
-    MEMADR:  controls <= 16'b0000100001000000;      
-    MEMRD:   controls <= 16'b0000001000000000;
-    MEMWB:   controls <= 16'b0001000100000000;
-    MEMWR:   controls <= 16'b0100001000000000;
-    RTYPEEX: controls <= 16'b0000100000000010;
-    RTYPEWB: controls <= 16'b0001000010000000;
+    MEMADR:  controls <= 17'b00000100001000000;      
+    MEMRD:   controls <= 17'b00000001000000000;
+    MEMWB:   controls <= 17'b00010000100000000;
+    MEMWR:   controls <= 17'b01000001000000000;
+    RTYPEEX: controls <= 17'b00000100000000010;
+    RTYPEWB: controls <= 17'b00010000010000000;
 
-    BEQEX:   controls <= 16'b0000110000001001;
+    BEQEX:   controls <= 17'b00000110000001001;
 
-    BNQEX:   controls <= 16'b0000110000001011;//BNQ
+    BNQEX:   controls <= 17'b00000110000001011;//BNQ
 
-    ADDIEX:  controls <= 16'b0000100001000000;//ADDI
-    ADDIWB:  controls <= 16'b0001000000000000;
+    ADDIEX:  controls <= 17'b00000100001000000;//ADDI
+    ADDIWB:  controls <= 17'b00010000000000000;
     
-    ORI_EX:  controls <= 16'b0000100001000100;//ORI
-    ORI_WB:  controls <= 16'b0001000000000000;
+    ORI_EX:  controls <= 17'b00000100001000100;//ORI
+    ORI_WB:  controls <= 17'b00010000000000000;
 
-    ANDI_EX: controls <= 16'b0000100001000101;//ANDI
-    ANDI_WB: controls <= 16'b0001000000000000;
+    ANDI_EX: controls <= 17'b00000100001000101;//ANDI
+    ANDI_WB: controls <= 17'b00010000000000000;
 
-    SLTI_EX: controls <= 16'b0000100001000111;//SLTI
-    SLTI_WB: controls <= 16'b0001000000000000;
+    SLTI_EX: controls <= 17'b00000100001000111;//SLTI
+    SLTI_WB: controls <= 17'b00010000000000000;
 
-    JEX:    controls <= 16'b1000000000010000; //JUMP	 
-    default: controls <= 16'bxxxxxxxxxxxxxxxx;// should never happen
+    JEX:    controls <= 17'b10000000000010000; //JUMP
+
+    FLOAT_ADD_EX: controls <= 17'b00000100001000100; //FLOAT_ADD
+    FLOAT_ADD_WB:	controls <= 17'b00010000000000000; //FLOAT_WB
+
+    default: controls <= 17'bxxxxxxxxxxxxxxxxx;// should never happen
   endcase
 endmodule

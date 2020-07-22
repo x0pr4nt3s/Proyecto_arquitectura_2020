@@ -4,7 +4,7 @@
 module controller(input         clk, reset,
                   input [5:0] op, funct,
                   input      zero,
-                  output      pcen, memwrite, irwrite, regwrite,
+                  output      pcen, memwrite, irwrite, regwrite_int,regwrite_float,
                   output       alusrca, iord, memtoreg, regdst,
                   output [1:0] alusrcb, pcsrc,
                   output [2:0] alucontrol);
@@ -14,7 +14,7 @@ module controller(input         clk, reset,
 
   // Main Decoder and ALU Decoder subunits.
   maindec md(clk, reset, op,
-             pcwrite, memwrite, irwrite, regwrite,
+             pcwrite, memwrite, irwrite, regwrite_int,regwrite_float,
              alusrca, branch, iord, memtoreg, regdst, 
              alusrcb, pcsrc, aluop);
   aludec  ad(funct, aluop, alucontrol);

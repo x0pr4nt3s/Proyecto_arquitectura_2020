@@ -4,15 +4,39 @@ module regfile(input        clk,
                input   [31:0] wd3, 
                output  [31:0] rd1, rd2);
 
-  reg [31:0] rf[31:0];
+  reg [31:0] rf_int[31:0];
 
 
   always @(posedge clk)
-    if (we3) rf[wa3] <= wd3;	
+    if (we3) rf_int[wa3] <= wd3;	
 
-  assign rd1 = (ra1 != 0) ? rf[ra1] : 0;
-  assign rd2 = (ra2 != 0) ? rf[ra2] : 0;
+  assign rd1 = (ra1 != 0) ? rf_int[ra1] : 0;
+  assign rd2 = (ra2 != 0) ? rf_int[ra2] : 0;
 endmodule
+
+
+module regfile_float(clk,regwrite_float,ra1,ra2,wa3,wd3,rd1,rd2);
+input clk,regwrite_float;
+input [4:0] ra1,ra2,wa3;
+input [31:0] wd3;
+output [31:0] rd1,rd2; 
+
+reg [31:0] rf_float [0:31];
+
+initial
+  begin
+      $readmemb("variables_float.txt",rf_float);  
+end
+
+always@(posedge clk)
+if ( regwrite_float) begin
+  rf_float[wa3] <= wd3;
+end
+
+assign rd1 = (ra1 != 0) ? rf_float[ra1] :0;
+assign rd2 = (ra2 != 0) ? rf_float[ra2] : 0;
+endmodule
+
 
 
 module adder(input  [31:0] a, b,

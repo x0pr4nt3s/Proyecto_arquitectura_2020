@@ -1,6 +1,6 @@
 module floating_alu_add(a,b,alu_op_float,alu_float_result);
 input [31:0] a,b;
-input [1:0] alu_op_float;
+input [2:0] alu_op_float;
 output [31:0] alu_float_result;
 
 
@@ -45,7 +45,7 @@ assign mantisa_final = (new_mantisa_shift[22:0] + mantisa_mayor[22:0]);
 
 assign sign_final = sign_a & sign_b;
 
-assign alu_float_result = (alu_op_float==2'b) ?{sign_final,mayor_exponente,mantisa_final};
+assign alu_float_result = {sign_final,mayor_exponente,mantisa_final};
 
 
 
