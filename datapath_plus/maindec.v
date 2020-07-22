@@ -151,7 +151,7 @@ always @(*)
 
     JEX:    controls <= 17'b10000000000010000; //JUMP
 
-    FLOAT_ADD_EX: controls <= 17'b00000100001000100; //FLOAT_ADD
+    FLOAT_ADD_EX: controls <= 17'b00000100001000000; //FLOAT_ADD
     FLOAT_ADD_WB:	controls <= 17'b00010000000000000; //FLOAT_WB
 
     default: controls <= 17'bxxxxxxxxxxxxxxxxx;// should never happen
