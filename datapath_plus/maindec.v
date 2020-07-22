@@ -24,6 +24,8 @@ parameter ANDI_WB = 5'b01111;//State 15
 parameter SLTI_EX = 5'b10000;//State 16
 parameter SLTI_WB = 5'b10001;//State 17
 parameter BNQEX = 5'b10010;	// State 18
+parameter FLOAT_ADD_EX = 5'b10011;//State 19
+parameter FLOAT_ADD_WB = 5'b10100;//State 20
 
 parameter LW = 6'b100011;	// Opcode for lw
 parameter SW = 6'b101011;	// Opcode for sw
@@ -35,7 +37,10 @@ parameter BNQ = 6'b000101; //Opcode for bnq
 parameter ORI = 6'b001101; //Opcode for ori
 parameter ANDI = 6'b001100; //Opcode for andi
 parameter SLTI = 6'b001010; //Opcode for slti
+
 parameter FLOAT = 6'b010001;//Opcode for FLOAT
+
+
 
 
 reg [4:0]  state, nextstate;
@@ -65,7 +70,7 @@ always @(*)
     ANDI:    nextstate <= ANDI_EX;
     SLTI:    nextstate <= SLTI_EX;
     J:       nextstate <= JEX;
-
+    FLOAT:   nextstate <= FLOAT_ADD;
     default: nextstate <= 4'bx; // should never happen
     endcase
  		// Add code here

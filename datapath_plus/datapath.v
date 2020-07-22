@@ -32,7 +32,11 @@ module datapath(input          clk, reset,
   flopr   #(32) datareg(clk, reset, readdata, data);
   mux2    #(5)  regdstmux(instr[20:16], instr[15:11],regdst, writereg);
   mux2    #(32) wdmux(aluout, data, memtoreg, wd3);
-  regfile       rf(clk, regwrite, instr[25:21], instr[20:16], writereg, wd3, rd1, rd2);
+
+  regfile       rf_int(clk, regwrite, instr[25:21], instr[20:16], writereg, wd3, rd1, rd2);
+  
+  //regfile       rf_floating(clk,regwrite,instr[25:21],instr[20:16],writereg,wd3,rd1,rd2);
+  
   signext       se(instr[15:0], signimm);
   sl2           immsh(signimm, signimmsh);
   flopr   #(32) areg(clk, reset, rd1, a);

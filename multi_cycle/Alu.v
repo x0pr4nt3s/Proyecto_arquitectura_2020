@@ -38,7 +38,7 @@ begin
          result <= 32'dx; 
          zero <= (a==b) ? 1'b1:1'b0;
       end 
-      3'b100: //BNQ 
+      3'b011: //BNQ 
       begin
          result <= 32'dx; 
          zero <= (a!=b) ? 1'b1:1'b0;

@@ -9,7 +9,7 @@ module controller(input         clk, reset,
                   output [1:0] alusrcb, pcsrc,
                   output [2:0] alucontrol);
 
-  wire [1:0] aluop;
+  wire [2:0] aluop;
   wire       branch, pcwrite;
 
   // Main Decoder and ALU Decoder subunits.

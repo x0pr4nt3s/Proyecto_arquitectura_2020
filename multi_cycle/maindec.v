@@ -3,20 +3,27 @@ input [5:0] op,
 output pcwrite,memwrite,irwrite,regwrite,
 output alusrca,branch,iord,memtoreg,regdst,
 output [1:0] alusrcb,pcsrc,
-output [1:0] aluop);
+output [2:0] aluop);
 
-parameter FETCH = 4'b0000; // State 0
-parameter DECODE = 4'b0001; // State 1
-parameter MEMADR = 4'b0010;	// State 2
-parameter MEMRD = 4'b0011;	// State 3
-parameter MEMWB = 4'b0100;	// State 4
-parameter MEMWR = 4'b0101;	// State 5
-parameter RTYPEEX = 4'b0110;	// State 6
-parameter RTYPEWB = 4'b0111;	// State 7
-parameter BEQEX = 4'b1000;	// State 8
-parameter ADDIEX = 4'b1001;	// State 9
-parameter ADDIWB = 4'b1010;	// state 10
-parameter JEX = 4'b1011;	// State 11
+parameter FETCH = 5'b00000; // State 0
+parameter DECODE = 5'b00001; // State 1
+parameter MEMADR = 5'b00010;	// State 2
+parameter MEMRD = 5'b00011;	// State 3
+parameter MEMWB = 5'b00100;	// State 4
+parameter MEMWR = 5'b00101;	// State 5
+parameter RTYPEEX = 5'b00110;	// State 6
+parameter RTYPEWB = 5'b00111;	// State 7
+parameter BEQEX = 5'b01000;	// State 8
+parameter ADDIEX = 5'b01001;	// State 9
+parameter ADDIWB = 5'b01010;	// state 10
+parameter JEX = 5'b01011;	// State 11
+parameter ORI_EX = 5'b01100;//State 12
+parameter ORI_WB = 5'b01101;//State 13
+parameter ANDI_EX = 5'b01110;//State 14
+parameter ANDI_WB = 5'b01111;//State 15
+parameter SLTI_EX = 5'b10000;//State 16
+parameter SLTI_WB = 5'b10001;//State 17
+parameter BNQEX = 5'b10010;	// State 18
 
 parameter LW = 6'b100011;	// Opcode for lw
 parameter SW = 6'b101011;	// Opcode for sw
@@ -24,9 +31,13 @@ parameter RTYPE = 6'b000000;	// Opcode for R-type
 parameter BEQ = 6'b000100;	// Opcode for beq
 parameter ADDI = 6'b001000;	// Opcode for addi
 parameter J = 6'b000010;	// Opcode for j
+parameter BNQ = 6'b000101; //Opcode for bnq 
+parameter ORI = 6'b001101; //Opcode for ori
+parameter ANDI = 6'b001100; //Opcode for andi
+parameter SLTI = 6'b001010; //Opcode for slti
 
-reg [3:0]  state, nextstate;
-reg [14:0] controls;
+reg [4:0]  state, nextstate;
+reg [15:0] controls;
 
   // state register
 always @(posedge clk or posedge reset)			
@@ -46,8 +57,13 @@ always @(*)
     SW:      nextstate <= MEMADR;
     RTYPE:   nextstate <= RTYPEEX;
     BEQ:     nextstate <= BEQEX;
+    BNQ:     nextstate <= BNQEX; 
     ADDI:    nextstate <= ADDIEX;
+    ORI:     nextstate <= ORI_EX;
+    ANDI:    nextstate <= ANDI_EX;
+    SLTI:    nextstate <= SLTI_EX;
     J:       nextstate <= JEX;
+
     default: nextstate <= 4'bx; // should never happen
     endcase
  		// Add code here
@@ -56,40 +72,74 @@ always @(*)
     SW: nextstate <= MEMWR;
     default: nextstate <= 4'bx;
     endcase
+    
     MEMRD: nextstate <= MEMWB;
     MEMWB: nextstate <= FETCH;
+    
     MEMWR: nextstate <= FETCH;
+    
     RTYPEEX: nextstate <= RTYPEWB;
     RTYPEWB: nextstate <= FETCH;
+    
     BEQEX:   nextstate <= FETCH;
+    
     ADDIEX:  nextstate <= ADDIWB;
     ADDIWB:  nextstate <= FETCH;
-    JEX: nextstate <= FETCH;    
-    default: nextstate <= 4'bx; // should never happen
+    
+    JEX: nextstate <= FETCH;
+
+    ORI_EX: nextstate <= ORI_WB;
+    ORI_WB: nextstate <= FETCH;
+
+    ANDI_EX: nextstate <= ANDI_WB;
+    ANDI_WB: nextstate <= FETCH;
+
+    SLTI_EX: nextstate <= SLTI_WB;
+    SLTI_WB: nextstate <= FETCH;
+
+
+    default: nextstate <= 5'bx; // should never happen
   endcase
 
   // output logic
   assign {pcwrite, memwrite, irwrite, regwrite, 
   alusrca, branch, iord, memtoreg, regdst,
   alusrcb, pcsrc, aluop} = controls;
+
+
+
   // ADD CODE HERE
   // Finish entering the output logic below.  We've entered the
   // output logic for the first two states, S0 and S1, for you.
 always @(*)
   case(state)
-    FETCH:   controls <= 15'b101000000010000;
-    DECODE:  controls <= 15'b000000000110000;
+    FETCH:   controls <= 16'b1010000000100000;
+    DECODE:  controls <= 16'b0000000001100000;
     // your code goes here 
-    MEMADR:  controls <= 15'b000010000100000;      
-    MEMRD:   controls <= 15'b000000100000000;
-    MEMWB:   controls <= 15'b000100010000000;
-    MEMWR:   controls <= 15'b010000100000000;
-    RTYPEEX: controls <= 15'b000010000000010;
-    RTYPEWB: controls <= 15'b000100001000000;
-    BEQEX:   controls <= 15'b000011000000101;
-    ADDIEX:  controls <= 15'b000010000100000;
-    ADDIWB:  controls <= 15'b000100000000000;
-    JEX:     controls <= 15'b100000000001000;	 
-    default: controls <= 15'bxxxxxxxxxxxxxxx;// should never happen
+    MEMADR:  controls <= 16'b0000100001000000;      
+    MEMRD:   controls <= 16'b0000001000000000;
+    MEMWB:   controls <= 16'b0001000100000000;
+    MEMWR:   controls <= 16'b0100001000000000;
+    RTYPEEX: controls <= 16'b0000100000000010;
+    RTYPEWB: controls <= 16'b0001000010000000;
+
+    BEQEX:   controls <= 16'b0000110000001001;
+
+    BNQEX:   controls <= 16'b0000110000001011;//BNQ
+
+    ADDIEX:  controls <= 16'b0000100001000000;//ADDI
+    ADDIWB:  controls <= 16'b0001000000000000;
+    
+    ORI_EX:  controls <= 16'b0000100001000100;//ORI
+    ORI_WB:  controls <= 16'b0001000000000000;
+
+    ANDI_EX: controls <= 16'b0000100001000101;//ANDI
+    ANDI_WB: controls <= 16'b0001000000000000;
+
+    SLTI_EX: controls <= 16'b0000100001000111;//SLTI
+    SLTI_WB: controls <= 16'b0001000000000000;
+
+    JEX:    controls <= 16'b1000000000010000; //JUMP	 
+    default: controls <= 16'bxxxxxxxxxxxxxxxx;// should never happen
   endcase
 endmodule

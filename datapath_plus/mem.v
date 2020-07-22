@@ -7,7 +7,7 @@ module mem(input         clk, we,
   // initialize memory with instructions
   initial
     begin
-      $readmemb("mem.dat",RAM);  // "memfile.dat" contains your instructions in hex
+      $readmemb("mem.dat",RAM);  
     end
 
   assign rd = {RAM[a],RAM[a+1],RAM[a+2],RAM[a+3]}; // word aligned

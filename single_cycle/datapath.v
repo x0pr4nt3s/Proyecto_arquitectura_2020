@@ -45,7 +45,7 @@ regfile rf(clk,regwrite,instr[25:21],instr[20:16],writereg,
 mux2 #(5) wrmux(instr[20:16],instr[15:11],regdst,writereg);//mux del write register para el RF 
 
 mux2 #(32)  resmux(aluout, readdata,memtoreg, result);
-signext se(instr[15:0],signim);
+signext se(instr[15:0],alucontrol,signim);
 
 // ALU Logic 
 

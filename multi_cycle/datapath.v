@@ -10,35 +10,20 @@ module datapath(input          clk, reset,
                 output  [31:0] adr, writedata, 
                 input   [31:0] readdata);
 
-  // Below are the internal signals of the datapath module.
 
   wire [4:0]  writereg;
   wire [31:0] pcnext, pc;
   wire [31:0] instr, data, srca, srcb;
   wire [31:0] a;
   wire [31:0] aluresult, aluout;
-  wire [31:0] signimm;   // the sign-extended immediate
-  wire [31:0] signimmsh;	// the sign-extended immediate shifted left by 2
+  wire [31:0] signimm;   
+  wire [31:0] signimmsh;	
   wire [31:0] wd3, rd1, rd2;
 
-  // op and funct fields to controller
   assign op = instr[31:26];
   assign funct = instr[5:0];
 
-  // Your datapath hardware goes below.  Instantiate each of the submodules
-  // that you need.  Remember that alu's, mux's and various other 
-  // versions of parameterizable modules are available in mipsparts.sv
-  // from Lab 9. You'll likely want to include this verilog file in your
-  // simulation.
 
-  // We've included parameterizable 3:1 and 4:1 muxes below for your use.
-
-  // Remember to give your instantiated modules applicable names
-  // such as pcreg (PC register), wdmux (Write Data Mux), etc.
-  // so it's easier to understand.
-
-
-  // datapath
 
 
   flopenr #(32) pcreg(clk, reset, pcen, pcnext, pc);
@@ -48,14 +33,11 @@ module datapath(input          clk, reset,
   mux2    #(5)  regdstmux(instr[20:16], instr[15:11],regdst, writereg);
   mux2    #(32) wdmux(aluout, data, memtoreg, wd3);
   regfile       rf(clk, regwrite, instr[25:21], instr[20:16], writereg, wd3, rd1, rd2);
-  signext       se(instr[15:0], signimm);
-  //assign zeroimm = {16'b0, instr[15:0]}; // !!!DANGER!!!
-  //mux2    #(32) orimux(zeroimm, signimm, ori, immcomplete);
+  signext       se(instr[15:0],alucontrol,signimm);
   sl2           immsh(signimm, signimmsh);
   flopr   #(32) areg(clk, reset, rd1, a);
   flopr   #(32) breg(clk, reset, rd2, writedata);
   mux2    #(32) srcamux(pc, a, alusrca, srca);
-  //mux4    #(32) srcbmux(writedata, 32'b100, immcomplete, signimmsh, alusrcb, srcb);
   mux4    #(32) srcbmux(writedata, 32'b100, signimm, signimmsh, alusrcb, srcb);
   alu           alu(srca, srcb, alucontrol, aluresult, zero);
   flopr   #(32) alureg(clk, reset, aluresult, aluout);
